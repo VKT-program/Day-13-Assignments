@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form </title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        form {
+            background-color: rgb(255, 254, 254);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 350px;
+        }
+        h1 {
+            text-align: center;
+            color: #ffffff;
+            margin-bottom: 25px;
+            text-decoration: underline;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start; 
+        }
+        label {
+            display: inline-block;
+            width: 80px; 
+            text-align: right;
+            margin-right: 10px;
+            padding-top: 5px; 
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="url"],
+        textarea {
+            flex-grow: 1; 
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+        textarea {
+            resize: vertical; 
+            min-height: 60px;
+        }
+        .error-message {
+            color: red;
+            font-size: 0.85em; 
+            margin-left: 10px; 
+            width: 150px; 
+            line-height: 1.2; 
+        }
+        input.invalid, textarea.invalid {
+            border-color: red;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<center>
+    <h1>Registration Form</h1> <br><br>
+    <form id="registrationForm" novalidate>
+        <div class="form-group">
+            <label for="nameInput">Name:</label>
+            <input type="text" id="nameInput" name="name">
+            <span id="nameError" class="error-message"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="emailInput">Email:</label>
+            <input type="email" id="emailInput" name="email">
+            <span id="emailError" class="error-message"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="websiteInput">Website:</label>
+            <input type="url" id="websiteInput" name="website">
+            <span id="websiteError" class="error-message"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="messageInput">Message:</label>
+            <textarea id="messageInput" name="message" rows="4"></textarea>
+            <span id="messageError" class="error-message"></span>
+        </div>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        const form = document.getElementById('registrationForm');
+        const nameInput = document.getElementById('nameInput');
+        const emailInput = document.getElementById('emailInput');
+        const websiteInput = document.getElementById('websiteInput');
+        const messageInput = document.getElementById('messageInput');
+
+        const nameError = document.getElementById('nameError');
+        const emailError = document.getElementById('emailError');
+        const websiteError = document.getElementById('websiteError');
+        const messageError = document.getElementById('messageError');
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const urlPattern = /^(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/[a-zA-Z0-9]+\.[^\s]{2,}|[a-zA-Z0-9]+\.[^\s]{2,})$/i;
+
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            let isValid = true; 
+
+            if (nameInput.value.trim() === '') {
+                nameError.textContent = 'This field is required';
+                nameInput.classList.add('invalid');
+                isValid = false;
+            } else {
+                nameError.textContent = '';
+                nameInput.classList.remove('invalid');
+            }
+
+            if (emailInput.value.trim() === '') {
+                emailError.textContent = 'This field is required';
+                emailInput.classList.add('invalid');
+                isValid = false;
+            } else if (!emailPattern.test(emailInput.value)) {
+                emailError.textContent = 'A valid email address is required';
+                emailInput.classList.add('invalid');
+                isValid = false;
+            } else {
+                emailError.textContent = '';
+                emailInput.classList.remove('invalid');
+            }
+
+            if (websiteInput.value.trim() === '') {
+                websiteError.textContent = 'This field is required';
+                websiteInput.classList.add('invalid');
+                isValid = false;
+            } else if (!urlPattern.test(websiteInput.value)) {
+                websiteError.textContent = 'A valid URL is required';
+                websiteInput.classList.add('invalid');
+                isValid = false;
+            } else {
+                websiteError.textContent = '';
+                websiteInput.classList.remove('invalid');
+            }
+
+            if (messageInput.value.trim() === '') {
+                messageError.textContent = 'This field is required';
+                messageInput.classList.add('invalid');
+                isValid = false;
+            } else {
+                messageError.textContent = '';
+                messageInput.classList.remove('invalid');
+            }
+
+            if (isValid) {
+                alert('Form submitted successfully!');
+            }
+        });
+    </script>
+</center>
+</body>
+</html>
